@@ -15,15 +15,12 @@
  * =============================================================================
  */
 const CLASSES_NAMES = {
-  0: 'apple',
-  1: 'avocado',
-  2: 'banana',
-  3: 'carrot',
-  4: 'lettuce',
-  5: 'onion',
-  6: 'pepper',
-  7: 'potato',
-  8: 'tomato',
+  0: 'Severe',
+  1: 'Very Unhealthy',
+  2: 'Unhealthy',
+  3: 'Unhealthy for sensitive groups',
+  4: 'Moderate',
+  5: 'Good',
  }
 
 const MOBILENET_MODEL_PATH =
