@@ -15,71 +15,85 @@ limitations under the License.
 ==============================================================================
 -->
 
-<!doctype html>
+<!DOCTYPE html>
+<html>
 
 <head>
-  <title>Project Classification+X</title>
+  <title>PollutAI: Air Quality Image Classification</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="shared/tfjs-examples.css" />
 </head>
 
-<style>
-  .pred-container {
-    margin-bottom: 20px;
-  }
-
-  .pred-container > div {
-    display: inline-block;
-    margin-right: 20px;
-    vertical-align: top;
-  }
-
-  .row {
-    display: table-row;
-  }
-  .cell {
-    display: table-cell;
-    padding-right: 20px;
-  }
-
-  #file-container {
-    margin-bottom: 20px;
-  }
-</style>
-
-<body>
-  <div class="tfjs-example-container">
+<body style="background-color: #f0f5ff; font-family: Arial, sans-serif;">
+  <div class="tfjs-example-container" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
     <section class='title-area'>
-      <h1>Fruits and Veggies Classification</h1>
+      <h1 style="text-align: center; color: #00aabb;">PollutAI: Air Quality Image Classification</h1>
     </section>
 
     <section>
-      <img src="dataset.jpg" style="width: 50%;">
-      <p class='section-head'>Description</p>
-      <p>
-        We classify 9 categories of fruits and veggies. 
-      </p>
-    </section>
-
-    <section>
-      <p class='section-head'>Status</p>
-      <div id="status"></div>
-    </section>
-
-    <section>
-      <p class='section-head'>Model Output</p>
-
-      <div id="file-container" style="display: none">
-        Upload an image: <input type="file" id="files" name="files[]" multiple />
+      <div>
+        <input type="file" id="imageInput" accept="image/*">
       </div>
+      <div id="imageContainer" style="margin-top: 20px;"></div>
+    </section>
 
-      <div id="predictions"></div>
-
-      <img style="display: none" id="cat" src="ai4all.jpg" width=224 height=224 />
+    <section>
+      <p class='section-head' style="font-weight: bold; color: #00aabb;">Parameters</p>
+      <div id="status" style="font-size: 16px; color: #0099cc;">
+        Upload an image to see parameters.
+      </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.2"></script>
     <script src="index.js"></script>
+    <script>
+      // Load the pre-trained image classification model using TensorFlow.js
+      async function loadModel() {
+        const model = await tf.loadGraphModel('model/model.json');
+        return model;
+      }
+
+      // Function to preprocess the image for the model
+      function preprocessImage(img) {
+        // Perform image preprocessing as required by your model
+        // For example, resizing the image to the input size expected by the model.
+        // Return the preprocessed image as a tensor.
+      }
+
+      // Function to predict air pollution parameters based on the image
+      async function predictParameters(model, img) {
+        const tensor = preprocessImage(img);
+        const predictions = await model.predict(tensor);
+
+        // Process the predictions and extract relevant parameters
+        // For example, get the pollution level or other relevant information.
+        // Return the extracted parameters.
+      }
+
+      // Function to handle image upload and display results
+      async function handleImageUpload(event) {
+        const imageFile = event.target.files[0];
+        const imageElement = document.createElement('img');
+
+        // Display the uploaded image
+        imageElement.src = URL.createObjectURL(imageFile);
+        imageElement.style.maxWidth = '100%';
+        document.getElementById('imageContainer').innerHTML = '';
+        document.getElementById('imageContainer').appendChild(imageElement);
+
+        // Load the model (Assuming you have the model loaded)
+        const model = await loadModel();
+
+        // Predict and display the parameters
+        const parameters = await predictParameters(model, imageElement);
+        document.getElementById('status').innerText = 'Parameters: ' + parameters;
+      }
+
+      // Add an event listener to the image input element
+      document.getElementById('imageInput').addEventListener('change', handleImageUpload);
+    </script>
   </div>
 </body>
+
+</html>
